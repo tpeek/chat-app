@@ -1,4 +1,5 @@
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/analytics';
 import 'firebase/firestore';
 
 const firebaseConfig = {
@@ -15,6 +16,4 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
-const db = firebase.firestore();
-
-export { db };
+export const db = firebase.firestore();

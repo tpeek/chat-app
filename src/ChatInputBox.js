@@ -1,10 +1,22 @@
 import React from 'react';
 
+import { db } from './firebase';
+
 function ChatInputBox() {
   return (
-    <div className="ChatInputBox">
+    <form
+      onSubmit={e => {
+        e.preventDefault();
+        db.collection('/channels/general/messages').add({
+          text: e.target.elements[0].value,
+          createdAt: new Date(),
+        });
+        e.target.reset();
+      }}
+      className="ChatInputBox"
+    >
       <input className="ChatInput" placeholder="Message #general" />
-    </div>
+    </form>
   );
 }
 
