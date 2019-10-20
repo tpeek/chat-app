@@ -10,7 +10,7 @@ function Nav() {
       snapshot.forEach(doc => {
         docs.push({
           ...doc.data(),
-          id: doc.id
+          id: doc.id,
         });
       });
       setChannels(docs);
@@ -20,11 +20,7 @@ function Nav() {
   return (
     <div className="Nav">
       <div className="User">
-        <img
-          className="UserImage"
-          alt="whatever"
-          src="https://placekitten.com/64/64"
-        />
+        <img className="UserImage" alt="whatever" src="https://placekitten.com/64/64" />
         <div>
           <div>Ryan Florence</div>
           <div>
@@ -33,8 +29,10 @@ function Nav() {
         </div>
       </div>
       <nav className="ChannelNav">
-        {channels.map(channel => (
-          <a href={`/channel/${channel.id}`}># {channel.id}</a>
+        {channels.map(({ id }) => (
+          <a key={id} href={`/channel/${id}`}>
+            # {id}
+          </a>
         ))}
       </nav>
     </div>

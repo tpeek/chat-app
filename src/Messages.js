@@ -3,7 +3,7 @@ import React from 'react';
 function Messages() {
   return (
     <div className="Messages">
-      <div className="EndOfMessages">That's every message!</div>
+      <div className="EndOfMessages">That is every message!</div>
       <div>
         <div className="Day">
           <div className="DayLine" />
