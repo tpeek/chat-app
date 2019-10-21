@@ -23,7 +23,6 @@ export default (path, orderBy) => {
               });
             });
             setDocs(docs);
-            console.log(docs);
           })
       : db.collection(path).onSnapshot(snapshot => {
           const docs = [];
