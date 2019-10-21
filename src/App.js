@@ -4,12 +4,7 @@ import Nav from './Nav';
 import Channel from './Channel';
 import { firebase } from './firebase';
 
-const handleSignIn = async () => {
-  const provider = new firebase.auth.GoogleAuthProvider();
-  await firebase.auth().signInWithPopup(provider);
-};
-
-function App() {
+const useAuth = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -22,16 +17,46 @@ function App() {
     });
   });
 
+  return user;
+};
+
+const Login = () => {
+  const [authError, setAuthError] = useState(null);
+
+  const handleSignIn = async () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    try {
+      await firebase.auth().signInWithPopup(provider);
+    } catch (error) {
+      setAuthError(error);
+    }
+  };
+
+  return (
+    <div className="Login">
+      <h1>Chat!</h1>
+      <button onClick={handleSignIn}>Sign in with Google</button>
+      {authError && (
+        <div>
+          <p>Sorry, there was a problem.</p>
+          <p className="Error">{authError.message}</p>
+          <p>Please try again.</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+function App() {
+  const user = useAuth();
+
   return user ? (
     <div className="App">
       <Nav user={user} />
       <Channel />
     </div>
   ) : (
-    <div className="Login">
-      <h1>Chat!</h1>
-      <button onClick={handleSignIn}>Sign in with Google</button>
-    </div>
+    <Login />
   );
 }
 

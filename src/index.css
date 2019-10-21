@@ -223,3 +223,7 @@ body {
   text-align: center;
   margin-top: 55px;
 }
+
+.Error {
+  color: red;
+}
