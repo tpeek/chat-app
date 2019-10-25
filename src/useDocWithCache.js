@@ -19,7 +19,6 @@ const useDocWithCache = path => {
             ...doc.data(),
             id: doc.id,
           };
-          console.log(path);
           setDoc(newDoc);
           cache[path] = newDoc;
           pendingCache[path] = false;
@@ -29,9 +28,9 @@ const useDocWithCache = path => {
         stillMounted = false;
       };
     }
-  }, [path]);
+  }, [path, doc]);
 
-  return doc || { displayName: 'Username' };
+  return doc || {};
 };
 
 export default useDocWithCache;
