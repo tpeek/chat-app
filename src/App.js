@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 import Nav from './Nav';
 import Channel from './Channel';
@@ -58,13 +59,22 @@ const Login = () => {
 function App() {
   const user = useAuth();
 
-  return user ? (
-    <div className="App">
-      <Nav user={user} />
-      <Channel user={user} />
-    </div>
-  ) : (
-    <Login />
+  return (
+    <BrowserRouter>
+      {user ? (
+        <div className="App">
+          <Nav user={user} />
+          <Switch>
+            <Route path="/channel/:channelId">
+              <Channel user={user} />
+            </Route>
+            <Redirect to="/channel/general" />
+          </Switch>
+        </div>
+      ) : (
+        <Login />
+      )}
+    </BrowserRouter>
   );
 }
 

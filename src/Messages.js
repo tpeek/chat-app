@@ -45,8 +45,8 @@ const Message = ({ text }) => {
   );
 };
 
-function Messages() {
-  const messages = useCollection('/channels/general/messages', 'createdAt');
+function Messages({ channelId }) {
+  const messages = useCollection(`/channels/${channelId}/messages`, 'createdAt');
   return (
     <div className="Messages">
       <div className="EndOfMessages">That is every message!</div>
