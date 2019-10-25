@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import useCollection from './useCollection';
 import { firebase } from './firebase';
@@ -26,9 +27,9 @@ function Nav({ user }) {
       </div>
       <nav className="ChannelNav">
         {channels.map(({ id }) => (
-          <a key={id} href={`/channel/${id}`}>
+          <Link key={id} to={`/channel/${id}`}>
             # {id}
-          </a>
+          </Link>
         ))}
       </nav>
     </div>

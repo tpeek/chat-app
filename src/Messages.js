@@ -1,29 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import useCollection from './useCollection';
-import { db } from './firebase';
-
-const useDoc = path => {
-  const [doc, setDoc] = useState(null);
-
-  useEffect(() => {
-    return db.doc(path).onSnapshot(doc => {
-      setDoc({
-        ...doc.data(),
-        id: doc.id,
-      });
-    });
-  }, [path]);
-
-  return doc || { displayName: 'Username' };
-};
+import useDocWithCache from './useDocWithCache';
 
 const MessageWithAvatar = ({ user, createdAt, text }) => {
-  const author = useDoc(`users/${user.id}`);
+  const author = useDocWithCache(`users/${user.id}`);
 
   return (
     <div className="Message with-avatar">
-      <div className="Avatar" style={{ backgroundImage: `url(${author.photoURL})`}} />
+      <div className="Avatar" style={{ backgroundImage: `url(${author.photoURL})` }} />
       <div className="Author">
         <div>
           <span className="UserName">{author.displayName} </span>
