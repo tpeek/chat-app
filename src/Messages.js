@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import useCollection from './useCollection';
 import useDocWithCache from './useDocWithCache';
@@ -30,10 +30,19 @@ const Message = ({ text }) => {
   );
 };
 
+const useScroller = ref => {
+  useEffect(() => {
+    ref.current.scrollTop = ref.current.scrollHeight;
+  });
+};
+
 function Messages({ channelId }) {
   const messages = useCollection(`/channels/${channelId}/messages`, 'createdAt');
+  const scrollerRef = useRef();
+  useScroller(scrollerRef);
+
   return (
-    <div className="Messages">
+    <div ref={scrollerRef} className="Messages">
       <div className="EndOfMessages">That is every message!</div>
       {messages.map((message, index) => (
         <div key={message.id}>
