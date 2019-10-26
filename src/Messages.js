@@ -30,19 +30,31 @@ const Message = ({ text }) => {
   );
 };
 
-const useScroller = ref => {
+const ChatScroller = props => {
+  const ref = useRef();
+  const shouldScroll = useRef(true);
+
   useEffect(() => {
-    ref.current.scrollTop = ref.current.scrollHeight;
+    if (shouldScroll.current) {
+      ref.current.scrollTop = ref.current.scrollHeight;
+    }
   });
+
+  const handleScroll = () => {
+    const node = ref.current;
+    const { scrollTop, clientHeight, scrollHeight } = node;
+    const atBottom = scrollHeight === clientHeight + scrollTop;
+    shouldScroll.current = atBottom;
+  };
+
+  return <div ref={ref} {...props} onScroll={handleScroll} />;
 };
 
 function Messages({ channelId }) {
   const messages = useCollection(`/channels/${channelId}/messages`, 'createdAt');
-  const scrollerRef = useRef();
-  useScroller(scrollerRef);
 
   return (
-    <div ref={scrollerRef} className="Messages">
+    <ChatScroller className="Messages">
       <div className="EndOfMessages">That is every message!</div>
       {messages.map((message, index) => (
         <div key={message.id}>
@@ -62,7 +74,7 @@ function Messages({ channelId }) {
           )}
         </div>
       ))}
-    </div>
+    </ChatScroller>
   );
 }
 
