@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 
 import useCollection from './useCollection';
 import useDoc from './useDoc';
-import { firebase } from './firebase';
+import { firebase, db } from './firebase';
 
 function Nav({ user }) {
   const channels = useCollection('channels');
   const userChannelsInfo = useDoc(`users/${user.uid}`).channels;
   const userChannels = [];
   const otherChannels = [];
-  channels.map(channel => {
+  channels.forEach(channel => {
     if (userChannelsInfo && userChannelsInfo[channel.id]) {
       userChannels.push(channel.id);
     } else {
@@ -27,6 +27,7 @@ function Nav({ user }) {
           <div>
             <button
               onClick={() => {
+                db.doc(`users/${user.uid}`).update({ isOnline: false });
                 firebase.auth().signOut();
               }}
               className="text-button"

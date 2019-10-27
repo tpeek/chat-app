@@ -15,6 +15,7 @@ const useAuth = () => {
           displayName: firebaseUser.displayName,
           photoURL: firebaseUser.photoURL,
           uid: firebaseUser.uid,
+          isOnline: true,
         };
         setUser(user);
         db.collection('users')
