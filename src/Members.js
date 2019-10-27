@@ -11,9 +11,9 @@ function Members({ channelId }) {
   return (
     <div className="Members">
       <div>
-        {subbedUsers.sort(sortByDisplayName).map(({ displayName, isOnline, id }) => (
+        {subbedUsers.sort(sortByDisplayName).map(({ displayName, status: { state } = {}, id }) => (
           <div key={id} className="Member">
-            <div className={`MemberStatus ${isOnline ? 'online' : 'offline'}`} />
+            <div className={`MemberStatus ${state}`} />
             {displayName}
           </div>
         ))}

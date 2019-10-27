@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import useCollection from './useCollection';
 import useDoc from './useDoc';
-import { firebase, db } from './firebase';
+import { firebase } from './firebase';
 
 function Nav({ user }) {
   const channels = useCollection('channels');
@@ -27,7 +27,6 @@ function Nav({ user }) {
           <div>
             <button
               onClick={() => {
-                db.doc(`users/${user.uid}`).update({ isOnline: false });
                 firebase.auth().signOut();
               }}
               className="text-button"
