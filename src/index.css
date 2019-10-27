@@ -93,6 +93,7 @@ body {
 .TopicInput {
   font: inherit;
   border: 1px solid transparent;
+  min-width: 600px;
 }
 
 .TopicInput:hover {

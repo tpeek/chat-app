@@ -2,10 +2,21 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import useCollection from './useCollection';
+import useDoc from './useDoc';
 import { firebase } from './firebase';
 
 function Nav({ user }) {
   const channels = useCollection('channels');
+  const userChannelsInfo = useDoc(`users/${user.uid}`).channels;
+  const userChannels = [];
+  const otherChannels = [];
+  channels.map(channel => {
+    if (userChannelsInfo && userChannelsInfo[channel.id]) {
+      userChannels.push(channel.id);
+    } else {
+      otherChannels.push(channel.id);
+    }
+  });
 
   return (
     <div className="Nav">
@@ -26,7 +37,15 @@ function Nav({ user }) {
         </div>
       </div>
       <nav className="ChannelNav">
-        {channels.map(({ id }) => (
+        <span style={{ marginLeft: 8 }}>Your channels:</span>
+        {userChannels.map(id => (
+          <Link key={id} to={`/channel/${id}`}>
+            # {id}
+          </Link>
+        ))}
+        <div style={{ height: 60 }} />
+        <span style={{ marginLeft: 8 }}>Other channels:</span>
+        {otherChannels.map(id => (
           <Link key={id} to={`/channel/${id}`}>
             # {id}
           </Link>
